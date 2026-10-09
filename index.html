@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduBridge — Product Overview</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --dominant: #F8FAFC;
+    --secondary: #0F2547;
+    --accent: #F5B81B;
+    
+    --text-light: #FFFFFF;
+    --text-muted: #475569;
+    --border-color: #CBD5E1;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--dominant);
+    color: var(--secondary);
+    line-height: 1.6;
+    padding-top: 70px;
+  }
+
+  img { max-width: 100%; display: block; border-radius: 4px; }
+  a { text-decoration: none; color: inherit; }
+  
+  .btn-primary {
+    background-color: var(--accent);
+    color: var(--secondary);
+    padding: 12px 24px;
+    font-weight: 700;
+    border: none;
+    border-radius: 4px;
+    display: inline-block;
+    cursor: pointer;
+  }
+  
+  .btn-secondary {
+    background-color: transparent;
+    color: var(--secondary);
+    padding: 12px 24px;
+    font-weight: 700;
+    border: 2px solid var(--secondary);
+    border-radius: 4px;
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  .section { padding: 80px 5%; max-width: 1200px; margin: 0 auto; }
+  .section-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 16px; color: var(--secondary); }
+  .section-subtitle { font-size: 1.125rem; color: var(--text-muted); margin-bottom: 48px; max-width: 800px; }
+
+  .nav {
+    background-color: var(--secondary);
+    color: var(--text-light);
+    padding: 16px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 900;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .nav-logo { font-size: 1.25rem; font-weight: 700; color: var(--text-light); }
+  .nav-logo span { color: var(--accent); }
+  
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a { font-weight: 500; font-size: 0.9rem; }
+  .nav-links a:hover { color: var(--accent); }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  
+  .team-card {
+    background: #FFFFFF;
+    border: 1px solid var(--border-color);
+    padding: 24px;
+    border-radius: 4px;
+    text-align: center;
+  }
+  
+  .team-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 16px;
+    border: 3px solid var(--secondary);
+    background-color: var(--border-color);
+  }
+  
+  .team-name { font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; line-height: 1.3; }
+  .team-role { font-size: 0.875rem; color: var(--accent); font-weight: 600; margin-bottom: 16px; text-transform: uppercase; }
+  
+  .team-contact {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    line-height: 1.8;
+  }
+  
+  .team-links {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+  }
+  
+  .team-link {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--secondary);
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 2px;
+    transition: color 0.2s;
+  }
+  .team-link:hover { color: var(--accent); }
+  .team-link.disabled { display: none; } 
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .hero-content h1 {
+    font-size: 3rem;
+    line-height: 1.1;
+    margin-bottom: 24px;
+  }
+  
+  .hero-content p {
+    font-size: 1.125rem;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+  }
+  
+  .hero-actions { display: flex; gap: 16px; }
+  
+  .hero-image {
+    background-color: var(--secondary);
+    padding: 8px;
+    border: 4px solid var(--secondary);
+  }
+
+  .subsystems-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+  
+  .subsystem-card {
+    background: #FFFFFF;
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--accent);
+    padding: 24px;
+    border-radius: 4px;
+  }
+  
+  .subsystem-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 16px; color: var(--secondary); }
+  .subsystem-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+  .subsystem-desc strong { color: var(--secondary); display: block; margin-top: 12px; margin-bottom: 4px; }
+  .subsystem-list { margin-left: 16px; margin-bottom: 12px; }
+  .subsystem-list li { margin-bottom: 4px; }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  
+  .feature-card {
+    background: #FFFFFF;
+    border: 1px solid var(--border-color);
+    padding: 24px;
+    border-radius: 4px;
+  }
+  
+  .feature-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    object-position: top;
+    margin-bottom: 16px;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  
+  .feature-image:hover { opacity: 0.85; }
+  
+  .feature-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 8px; }
+  .feature-desc { font-size: 0.95rem; color: var(--text-muted); }
+
+  .lightbox-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 37, 71, 0.95);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+  }
+  
+  .lightbox-overlay.active { display: flex; }
+  
+  .lightbox-image-container {
+    position: relative;
+    max-width: 90%;
+    max-height: 90vh;
+  }
+  
+  .lightbox-image {
+    max-width: 100%;
+    max-height: 90vh;
+    border: 4px solid var(--accent);
+    border-radius: 4px;
+    background-color: var(--dominant);
+  }
+  
+  .lightbox-close {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    color: var(--text-light);
+    font-size: 2.5rem;
+    font-weight: 700;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    line-height: 1;
+  }
+  .lightbox-close:hover { color: var(--accent); }
+
+  .footer {
+    background-color: var(--secondary);
+    color: var(--text-light);
+    padding: 48px 5%;
+    text-align: center;
+  }
+  
+  .footer p { color: #94A3B8; font-size: 0.875rem; }
+
+  @media (max-width: 992px) {
+    .hero, .features-grid, .team-grid, .subsystems-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 768px) {
+    .hero, .features-grid, .team-grid, .subsystems-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-logo">Edu<span>Bridge</span></div>
+    <ul class="nav-links">
+      <li><a href="#team">Team</a></li>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#subsystems">Subsystems</a></li>
+      <li><a href="#features">Capabilities</a></li>
+    </ul>
+  </nav>
+
+  <section class="section" id="team">
+    <h2 class="section-title">Meet the Development Team</h2>
+    <div class="team-grid" id="team-container"></div>
+  </section>
+
+  <header class="section hero" id="overview">
+    <div class="hero-content">
+      <h1>Centralized Educational Support Platform</h1>
+      <p>In the midst of South Africa's education crisis, where the National Senior Certificate (NSC) pass rates are hitting record highs while overall Mathematics performance continues to drop—targeted intervention is more critical than ever. EduBridge simplifies tutoring management, tracks learner progress, and replaces manual spreadsheets with one definitive operational dashboard. Built for ClassRoom Buddies Organisation to turn administrative chaos into measured impact.</p>
+      <div class="hero-actions">
+        <a href="#features" class="btn-primary">View Capabilities</a>
+        <a href="#subsystems" class="btn-secondary">View Subsystems</a>
+      </div>
+    </div>
+    <div class="hero-image">
+      <img src="images/hero.png" alt="EduBridge Executive Dashboard">
+    </div>
+  </header>
+
+  <section class="section" id="subsystems" style="padding-bottom: 40px;">
+    <h2 class="section-title">Core Subsystems</h2>
+    <p class="section-subtitle">The detailed foundational modules powering the EduBridge architecture.</p>
+    <div class="subsystems-grid" id="subsystems-container"></div>
+  </section>
+
+  <section class="section" id="features" style="padding-top: 40px;">
+    <h2 class="section-title">Platform Capabilities</h2>
+    <p class="section-subtitle">Visual highlights of the systems working together to provide oversight and streamline communication. Click on any image to view it full size.</p>
+    <div class="features-grid" id="capabilities-container"></div>
+  </section>
+
+  <footer class="footer">
+    <div class="nav-logo" style="margin-bottom: 16px;">Edu<span>Bridge</span></div>
+    <p>&copy; 2026 Code4Change Team. Built for ClassRoom Buddies Organisation.</p>
+  </footer>
+
+  <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+    <div class="lightbox-image-container" onclick="event.stopPropagation()">
+      <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+      <img src="" alt="Full Screen Preview" class="lightbox-image" id="lightbox-img">
+    </div>
+  </div>
+
+  <script>
+    const teamData = [
+      {
+        "name": "Fortune Fezile Thobela",
+        "role": "Backend Developer",
+        "image": "images/Fortune.png",
+        "cell": "+27 12 345 6789",
+        "email": "fortune@code4change.org",
+        "linkedin": "https://www.linkedin.com/in/fortune-thobela-89b871271",
+        "github": "https://github.com/FortuneFezileThobela"
+      },
+      {
+        "name": "Kelebogile Precious Modiba",
+        "role": "Frontend Developer",
+        "image": "images/Precious.png",
+        "cell": "+27 23 456 7890",
+        "email": "precious@code4change.org",
+        "linkedin": "https://www.linkedin.com/in/precious-modiba-2ab201286",
+        "github": "https://github.com/Precious0207"
+      },
+      {
+        "name": "Sibusisiwe Ziphozethu Mbatha",
+        "role": "Frontend Developer",
+        "image": "images/busie.jpeg",
+        "cell": "+27 34 567 8901",
+        "email": "sibusisiwe@code4change.org",
+        "linkedin": "https://www.linkedin.com/in/sibusisiwe-mbatha-344952442/",
+        "github": "https://github.com/Busie-Mbatha"
+      },
+      {
+        "name": "Lapiyano Manganhe",
+        "role": "Backend Developer",
+        "image": "images/Lapiyano.png",
+        "cell": "+27 45 678 9012",
+        "email": "lapiyano@code4change.org",
+        "linkedin": "https://www.linkedin.com/in/lapiyano-manganhe-615936319",
+        "github": "https://github.com/Lapiyano"
+      }
+    ];
+
+    const subsystemsData = [
+      {
+        "title": "User Management System",
+        "whatItDoes": [
+          "Manages users (learners, tutors, admins)",
+          "Handles login, profiles, and roles"
+        ],
+        "problemItSolves": "Currently, learner and tutor data is scattered across forms and spreadsheets. This system creates a single, central database for all users."
+      },
+      {
+        "title": "Administrative Management System",
+        "whatItDoes": [
+          "Handles approvals, consent forms, and organisation control",
+          "Links parent consent directly to learner profiles",
+          "Allows the administrator to assign tutor to centre",
+          "Manage centres and compares metrics across all centres",
+          "Manages calendar"
+        ],
+        "problemItSolves": "The organisation currently manages consent forms on paper, stores them separately from learner records, and relies on disconnected spreadsheets to track tutors, centres, and schedules. This system centralises all administrative processes, linking consent directly to learners, providing a clear view of centre performance, and enabling efficient management of tutor assignments."
+      },
+      {
+        "title": "Centre Management System",
+        "whatItDoes": [
+          "Allow tutor/learner to signup to attend specific Saturday session",
+          "Allow tutors/learners to cancel signup in case something comes up",
+          "Allow tutors/learners to specify centre they will be attending and which subject they will be tutoring/learning",
+          "Track attendance history",
+          "QR codes for session check-in automatically records attendance",
+          "Allow administrators and director to open signups",
+          "Track attendance hours"
+        ],
+        "problemItSolves": "Solves manual attendance tracking, coordinates signups ensuring they always have enough tutors, and prevents fake/proxy attendance found with manual registers. This system ensures accurate and reliable attendance tracking."
+      },
+      {
+        "title": "Communication System",
+        "whatItDoes": [
+          "Sends important announcements and updates to learners and tutors.",
+          "Sends updates to parents via email.",
+          "Allows parents to book meetings with organisation staff for assistance or feedback.",
+          "Provides one central place where everyone can receive important information."
+        ],
+        "problemItSolves": "Currently, communication between the organisation, learners, tutors, and parents is not structured and often happens through informal channels. The Communication System introduces a centralised and structured way of sharing information, ensuring that all stakeholders receive important updates easy."
+      },
+      {
+        "title": "Learning Gap Detection System",
+        "whatItDoes": [
+          "Identifies weak subject areas based on performance data",
+          "Flags at-risk learners",
+          "Generates intervention alerts"
+        ],
+        "problemItSolves": "The organisation currently has no way to easily see where learners are struggling. Tutors know a learner is doing poorly but cannot pinpoint specific concepts that need attention. This system helps provide targeted academic support, enabling tutors to deliver support exactly where it is needed."
+      },
+      {
+        "title": "Resource Management System",
+        "whatItDoes": [
+          "Stores notes, worksheets, and study material.",
+          "Organised by subject and session."
+        ],
+        "problemItSolves": "Learning materials are inconsistent and often get lost. Learners are provided with access to high-quality learning resources via the platform. This system creates a central academic resource hub and creates continuous learning support."
+      },
+      {
+        "title": "Assessment System",
+        "whatItDoes": [
+          "Tracks learner performance and allows learners to take assessments",
+          "Stores session feedback and assessments",
+          "Allows the tutor to evaluate the session based on their assessments",
+          "Exports assessment data",
+          "Allows the admin and coordinator to view progress analytics and generate performance reports"
+        ],
+        "problemItSolves": "There is no real-time way to monitor learner progress. This system captures and centralises all learner performance data such as assessment scores into a single digital record."
+      }
+    ];
+
+    const capabilitiesData = [
+      {
+        "title": "Executive Dashboard",
+        "description": "Monitor learner growth, tutor activity, and organizational health in a single, unembellished view.",
+        "image": "images/analyticss.jpeg"
+      },
+      {
+        "title": "Learning Gap Detection",
+        "description": "Algorithmically surfaces at-risk learners and pinpoints exact chapters needing targeted intervention.",
+        "image": "images/learning-gap.png"
+      },
+      {
+        "title": "Smart Class Allocation",
+        "description": "Systematic matching of tutors to classes based on subject, grade, and historical availability.",
+        "image": "images/class-allocations.png"
+      },
+      {
+        "title": "QR Attendance Tracking",
+        "description": "Real-time digital sign-ins eliminate paper registers and prevent proxy attendance discrepancies.",
+        "image": "images/qr-codes.png"
+      },
+      {
+        "title": "Automated Sign-ups",
+        "description": "Learners and tutors book weekend sessions with automated waitlisting and capacity limits.",
+        "image": "images/signup.jpeg"
+      }
+    ];
+
+    function openLightbox(imageSrc) {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      lightboxImg.src = imageSrc;
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden'; 
+    }
+
+    function closeLightbox() {
+      const lightbox = document.getElementById('lightbox');
+      lightbox.classList.remove('active');
+      document.body.style.overflow = ''; 
+    }
+
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        closeLightbox();
+      }
+    });
+
+    const teamContainer = document.getElementById('team-container');
+    let teamHtml = '';
+    teamData.forEach(member => {
+      const linkedinClass = member.linkedin === "#" ? "disabled" : "";
+      const githubClass = member.github === "#" ? "disabled" : "";
+
+      teamHtml += `
+        <div class="team-card">
+          <img src="${member.image}" alt="${member.name}" class="team-img">
+          <h3 class="team-name">${member.name}</h3>
+          <p class="team-role">${member.role}</p>
+          <div class="team-contact">
+            Cell: ${member.cell}<br>
+            Email: ${member.email}
+          </div>
+          <div class="team-links">
+            <a href="${member.linkedin}" target="_blank" class="team-link ${linkedinClass}">LinkedIn</a>
+            <a href="${member.github}" target="_blank" class="team-link ${githubClass}">GitHub</a>
+          </div>
+        </div>
+      `;
+    });
+    teamContainer.innerHTML = teamHtml;
+
+    const subsystemsContainer = document.getElementById('subsystems-container');
+    let subsystemsHtml = '';
+    subsystemsData.forEach(subsystem => {
+      
+      let listItems = subsystem.whatItDoes.map(item => `<li>${item}</li>`).join('');
+      
+      subsystemsHtml += `
+        <div class="subsystem-card">
+          <h3 class="subsystem-title">${subsystem.title}</h3>
+          <div class="subsystem-desc">
+            <strong>What it does:</strong>
+            <ul class="subsystem-list">
+              ${listItems}
+            </ul>
+            <strong>Problem it solves:</strong>
+            <p>${subsystem.problemItSolves}</p>
+          </div>
+        </div>
+      `;
+    });
+    subsystemsContainer.innerHTML = subsystemsHtml;
+
+    const capabilitiesContainer = document.getElementById('capabilities-container');
+    let capabilitiesHtml = '';
+    capabilitiesData.forEach(feature => {
+      capabilitiesHtml += `
+        <div class="feature-card">
+          <img class="feature-image" src="${feature.image}" alt="${feature.title}" onclick="openLightbox('${feature.image}')">
+          <h3 class="feature-title">${feature.title}</h3>
+          <p class="feature-desc">${feature.description}</p>
+        </div>
+      `;
+    });
+    capabilitiesContainer.innerHTML = capabilitiesHtml;
+
+  </script>
+
+</body>
+</html>
