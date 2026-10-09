@@ -12,7 +12,6 @@
     --dominant: #F8FAFC;
     --secondary: #0F2547;
     --accent: #F5B81B;
-    
     --text-light: #FFFFFF;
     --text-muted: #475569;
     --border-color: #CBD5E1;
@@ -207,6 +206,65 @@
   .feature-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 8px; }
   .feature-desc { font-size: 0.95rem; color: var(--text-muted); }
 
+  .tech-marquee-wrapper {
+    width: 100%;
+    overflow: hidden;
+    margin-top: 32px;
+    padding: 10px 0;
+    position: relative;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  }
+
+  .tech-track {
+    display: flex;
+    gap: 24px;
+    width: max-content;
+    animation: marquee 25s linear infinite;
+  }
+
+  .tech-track:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  
+  .tech-card {
+    background: #FFFFFF;
+    border: 1px solid var(--border-color);
+    padding: 24px;
+    border-radius: 4px;
+    text-align: center;
+    width: 160px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .tech-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+  }
+  
+  .tech-image {
+    height: 60px;
+    width: auto;
+    object-fit: contain;
+    margin-bottom: 16px;
+  }
+  
+  .tech-name {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--secondary);
+  }
+
   .lightbox-overlay {
     display: none;
     position: fixed;
@@ -279,6 +337,7 @@
       <li><a href="#overview">Overview</a></li>
       <li><a href="#subsystems">Subsystems</a></li>
       <li><a href="#features">Capabilities</a></li>
+      <li><a href="#tech">Tech Stack</a></li>
     </ul>
   </nav>
 
@@ -290,7 +349,7 @@
   <header class="section hero" id="overview">
     <div class="hero-content">
       <h1>Centralized Educational Support Platform</h1>
-      <p>In the midst of South Africa's education crisis, where the National Senior Certificate (NSC) pass rates are hitting record highs while overall Mathematics performance continues to drop, targeted intervention is more critical than ever. EduBridge simplifies tutoring management, tracks learner progress, and replaces manual spreadsheets with one definitive operational dashboard. Built for ClassRoom Buddies Organisation to turn administrative chaos into measured impact.</p>
+      <p>In the midst of South Africa's education crisis, where the National Senior Certificate (NSC) pass rates are hitting record highs while overall Mathematics performance continues to drop—targeted intervention is more critical than ever. EduBridge simplifies tutoring management, tracks learner progress, and replaces manual spreadsheets with one definitive operational dashboard. Built for ClassRoom Buddies Organisation to turn administrative chaos into measured impact.</p>
       <div class="hero-actions">
         <a href="#features" class="btn-primary">View Capabilities</a>
         <a href="#subsystems" class="btn-secondary">View Subsystems</a>
@@ -307,10 +366,18 @@
     <div class="subsystems-grid" id="subsystems-container"></div>
   </section>
 
-  <section class="section" id="features" style="padding-top: 40px;">
+  <section class="section" id="features" style="padding-top: 40px; padding-bottom: 40px;">
     <h2 class="section-title">Platform Capabilities</h2>
     <p class="section-subtitle">Visual highlights of the systems working together to provide oversight and streamline communication. Click on any image to view it full size.</p>
     <div class="features-grid" id="capabilities-container"></div>
+  </section>
+
+  <section class="section" id="tech" style="padding-top: 40px;">
+    <h2 class="section-title" style="text-align: center;">Technology Stack</h2>
+    <p class="section-subtitle" style="text-align: center; margin: 0 auto;">The tools and frameworks powering the EduBridge platform.</p>
+    <div class="tech-marquee-wrapper">
+      <div class="tech-track" id="tech-container"></div>
+    </div>
   </section>
 
   <footer class="footer">
@@ -466,6 +533,18 @@
       }
     ];
 
+    const techStackData = [
+      { name: "MySQL", image: "images/mysql.png" },
+      { name: "VS Code", image: "images/vscode.jpg" },
+      { name: "Docker", image: "images/docker.png" },
+      { name: "Redis", image: "images/redis.png" },
+      { name: "React JS", image: "images/reactjs.png" },
+      { name: "Node.js", image: "images/nodejs.png" },
+      { name: "Supabase", image: "images/supabase.jpg" },
+      { name: "React Native", image: "images/reactnative.png" },
+      { name: "Gemini", image: "images/gemini.jpg" }
+    ];
+
     function openLightbox(imageSrc) {
       const lightbox = document.getElementById('lightbox');
       const lightboxImg = document.getElementById('lightbox-img');
@@ -513,9 +592,7 @@
     const subsystemsContainer = document.getElementById('subsystems-container');
     let subsystemsHtml = '';
     subsystemsData.forEach(subsystem => {
-      
       let listItems = subsystem.whatItDoes.map(item => `<li>${item}</li>`).join('');
-      
       subsystemsHtml += `
         <div class="subsystem-card">
           <h3 class="subsystem-title">${subsystem.title}</h3>
@@ -545,7 +622,22 @@
     });
     capabilitiesContainer.innerHTML = capabilitiesHtml;
 
-  </script>
+    const techContainer = document.getElementById('tech-container');
+    let techHtml = '';
+    const renderTechCards = () => {
+      techStackData.forEach(tech => {
+        techHtml += `
+          <div class="tech-card">
+            <img class="tech-image" src="${tech.image}" alt="${tech.name}">
+            <div class="tech-name">${tech.name}</div>
+          </div>
+        `;
+      });
+    };
+    renderTechCards();
+    renderTechCards();
+    techContainer.innerHTML = techHtml;
 
+  </script>
 </body>
 </html>
